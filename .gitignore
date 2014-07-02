@@ -1,0 +1,5 @@
+build/
+__pycache__/
+Data.txt
+SEQUENCE.txt
+setup.py

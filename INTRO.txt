@@ -1,0 +1,5 @@
+Hello!
+
+This is sample Summator text. It can be editted by accessing the "intro.txt" file located in the folder of the Summator program. Feel free to change it to whatever suits your needs!
+
+Note that the ending prompt below this line is added automatically (let the programmer know if this needs to change!)
