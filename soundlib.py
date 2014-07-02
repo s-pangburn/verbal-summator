@@ -30,8 +30,8 @@ class SoundLibrary():
         return (self.play(x))
 
     def play(self, number):
-        winsound.PlaySound('Sounds\\%s' % self.sounds[number], winsound.SND_FILENAME)
-                            #| winsound.SND_ASYNC | winsound.SND_LOOP)
+        winsound.PlaySound('Sounds\\%s' % self.sounds[number], winsound.SND_FILENAME
+                            | winsound.SND_ASYNC | winsound.SND_LOOP)
         return self.sounds[number]
     
     def stopAllSounds(self):
