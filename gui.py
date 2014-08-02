@@ -1,10 +1,7 @@
 '''
     GUI Class - handles drawing text to the screen and taking user input
 '''
-import tkSimpleDialog, tkMessageBox
-from Tkinter import Tk, StringVar, Label, Entry, END
-from data import Data
-from soundlib import SoundLibrary
+from Tkinter import Tk, StringVar, Label, Entry
 from time import sleep
 
 class Slide(Tk):
@@ -18,15 +15,6 @@ class Slide(Tk):
     def initialize(self):
         self.grid()
         self.fullscreen()
-        
-        self.library = SoundLibrary()
-        self.currentSound = ""
-        self.iterations = 0
-        self.repetitions = 0
-        
-        self.promptSession()
-        self.createLabel()
-        
         self.update()
         
         
@@ -37,32 +25,9 @@ class Slide(Tk):
         self.resizable(False, False)
         self.configure(background = "black")
         self.focus_set()
-        self.bind("<Escape>", self.endSession)
-        
-    def promptSession(self):
-        while (True):
-            ID = tkSimpleDialog.askstring(' ','Please enter Subject ID:')
-            if ID == None:
-                self.destroy()
-            sess = tkSimpleDialog.askstring(' ','Please enter Session ID:')
-            if sess == None:
-                self.destroy()
-                
-            while self.repetitions < 1:
-                self.repetitions = tkSimpleDialog.askinteger(' ','Please enter the number of repetitions:')
-                if self.repetitions == None:
-                    self.destroy()
-                elif self.repetitions < 1:
-                    tkMessageBox.showwarning(' ', "Integer must have a non-negative non-zero value.")
-                    
-            answer = tkMessageBox.askquestion(' ','Subject: '+ID+', Session: '+sess+', Repetitions: '+str(self.repetitions)+'\nContinue?')
-            if answer == "yes":
-                break
-            
-        self.data = Data(ID, sess) #Data collection object
         
 
-    def createLabel(self):
+    def createLabel(self, startFunction, endFunction):
         self.labelVariable = StringVar()
         self.label = Label(self, textvariable=self.labelVariable, 
                       anchor="center", fg="white", bg="black", 
@@ -70,7 +35,8 @@ class Slide(Tk):
         self.label.grid(column=0, row=0, padx=20, pady=20)
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
-        self.changeLabel(self.loadIntro(), self.startSession)
+        self.changeLabel(self.loadIntro(), startFunction)
+        self.bind("<Escape>", endFunction)
         
         
     def createEntryBox(self):
@@ -112,36 +78,3 @@ class Slide(Tk):
         self.update()
 
         
-    def startSession(self, event):
-        self.createEntryBox()
-        self.changeLabel("\n\n\n\n\n\n\n\nPlease type what word(s) you hear and press ENTER to continue.", self.advanceSession)
-        self.iterations+=1
-        self.greyScreen()
-        
-        self.currentSound = self.library.playRandom() #TODO: Extract more specific method
-        
-
-    def iterate(self):
-        self.library.stopAllSounds()
-        self.greyScreen()
-        if self.iterations == self.repetitions:
-            self.changeLabel("\n\n\n\n\n\n\n\nThank you for participating! \nPlease inform the researcher that you are finished.", self.endSession)
-            self.entry.destroy()
-        else:
-            self.iterations += 1
-            self.currentSound = self.library.playRandom() #TODO: Extract more specific method
-
-
-    def advanceSession(self, event):
-        self.data.add(self.currentSound, self.entry.get())
-        self.entry.delete(0, END)
-        
-        self.iterate()
-        
-
-    def endSession(self, event):
-        answer = tkMessageBox.askquestion(' ','End session?')
-        if answer == "yes":
-            if self.iterations > 0:
-                self.data.recordData()
-            self.destroy()

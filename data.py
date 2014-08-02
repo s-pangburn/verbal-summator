@@ -16,7 +16,7 @@ class Data():
     
 
     def recordData(self):
-        file = open("Data.txt", "a")
+        file = open("DATA.txt", "a")
         file.write("\nParticipant ID: %s" % self.participantID)
         file.write("\nSession ID: %s \n\n" % self.sessionID)
         for i in range(len(self.soundsPlayed)):

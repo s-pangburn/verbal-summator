@@ -5,15 +5,12 @@ Verbal Summator - Python Edition
 '''
 
 import random
-from gui import Slide
+from session import Session
 
 def main():
-    
     random.seed()
-    
-    session = Slide(None)
-    session.focus_set()
-    session.mainloop()
+
+    session = Session()
     
     print("Ran the application.")
 
