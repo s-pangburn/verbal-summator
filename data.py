@@ -39,9 +39,11 @@ class Data():
         file = open("DATA.txt", "a")
         file.write("\nParticipant ID: %s" % self.participantID)
         file.write("\nSession ID: %s \n\n" % self.sessionID)
+
         for i in range(len(self.soundsPlayed)):
             file.write("Instance #%s: \n" % str(i+1))
             file.write("  Sound played: %s \n" % self.soundsPlayed[i])
             file.write("  Reported word(s): %s \n\n" % self.responses[i])
+
         file.write("-------------------------\n")
         file.close()

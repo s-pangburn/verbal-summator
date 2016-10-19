@@ -14,21 +14,23 @@ class Session(object):
     '''Initializes the session and calls helper classes
 
     Subclasses:
-        library: object that handles sound playback
+        soundlib: object that handles sound playback
         gui: object that handles the view
         data: object that collects and stores data
     Attributes:
         iterations: Tracks the number of trials the participant has completed
         currentSound: filename of the sound that is currently playing
         repetitions: The number of trials the participant must complete
+        sequencing: True if a sequence has been requested by the researcher
     '''
 
     def __init__(self):
         '''Initializes classes and begins main loop'''
-        self.library = SoundLibrary()
+        self.soundlib = SoundLibrary()
         self.iterations = 0
         self.currentSound = ""
         self.repetitions = 0
+        self.sequencing = False
 
         self.gui = GUI(None)
         self.gui.focus_set()
@@ -57,12 +59,24 @@ class Session(object):
                 if self.repetitions == None:
                     sys.exit()
                 elif self.repetitions < 1:
-                    showwarning(' ', 'Integer must have a non-negative '
+                    showwarning(' ','Integer must have a non-negative '
                                 'non-zero value.')
+            while (True):
+                loadseq = askquestion(' ', 'Should a sequence be loaded?')
+                if loadseq == "yes":
+                    seqfile = askstring(' ','Please specify the filename containing'
+                                        ' the sequence.')
+                    seqname = self.soundlib.loadSequence(seqfile)
+                    if len(self.soundlib.sequence) > 0:
+                        self.sequencing = True
+                        break
+                elif loadseq == "no":
+                    seqname = "None"
+                    break
 
             answer = askquestion(' ','Subject: ' + ID + ', Session: ' + sess +
-                                 ', Repetitions: ' + str(self.repetitions)+'\n'
-                                 'Is this correct?')
+                                 ', Repetitions: ' + str(self.repetitions) +
+                                 ', Sequence: ' + seqname + '\nIs this correct?')
             if answer == "yes":
                 break
 
@@ -77,7 +91,7 @@ class Session(object):
                              "and press ENTER to continue.", self.advanceSession)
         self.gui.greyScreen()
 
-        self.currentSound = self.library.playRandom() # TODO: Extract more specific method
+        self.setCurrentSound()
 
 
     def advanceSession(self, event):
@@ -92,16 +106,16 @@ class Session(object):
         '''Stops the sound, greys the screen, and checks if the session
             is over.
         '''
-        self.library.stopAllSounds()
+        self.soundlib.stopAllSounds()
         self.gui.greyScreen()
         self.iterations += 1
         if self.iterations == self.repetitions:
             self.gui.changeLabel("\n\n\n\n\n\n\n\nThank you for participating!"
                                  "\nPlease inform the researcher that you are"
-                                 "finished.", self.endSession)
+                                 " finished.", self.endSession)
             self.gui.entry.destroy()
         else:
-            self.currentSound = self.library.playRandom() # TODO: Extract more specific method
+            self.setCurrentSound()
 
 
     def endSession(self, event):
@@ -111,3 +125,9 @@ class Session(object):
             if self.iterations > 0:
                 self.data.recordData()
             sys.exit()
+
+    def setCurrentSound(self):
+        if (self.sequencing):
+            self.currentSound = self.soundlib.playSequence(self.iterations)
+        else:
+            self.currentSound = self.soundlib.playRandom()
