@@ -1,5 +1,8 @@
 verbal-summator
 ===============
+
+*Implemented in Python 2.7*
+
 This repository is a framework that is being used for Psychology experiments at the University of the Pacific.
 
 The experiments surround some undeveloped theories proposed by B.F. Skinner early on in his career. It is still in active development, and is not working as intended yet.
