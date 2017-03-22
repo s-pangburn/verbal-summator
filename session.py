@@ -31,6 +31,7 @@ class Session(object):
         self.currentSound = ""
         self.repetitions = 0
         self.sequencing = False
+        self.inOrder = False
 
         self.gui = GUI(None)
         self.gui.focus_set()
@@ -61,18 +62,24 @@ class Session(object):
                 elif self.repetitions < 1:
                     showwarning(' ','Integer must have a non-negative '
                                 'non-zero value.')
-            while (True):
-                loadseq = askquestion(' ', 'Should a sequence be loaded?')
-                if loadseq == "yes":
-                    seqfile = askstring(' ','Please specify the filename containing'
-                                        ' the sequence.')
-                    seqname = self.soundlib.loadSequence(seqfile)
-                    if len(self.soundlib.sequence) > 0:
-                        self.sequencing = True
+
+            inorder = askquestion(' ', 'Should the sounds be played in order?')
+            if inorder == "yes":
+                self.inOrder = True
+                seqname = "In Order"
+            else:
+                while (True):
+                    loadseq = askquestion(' ', 'Then should a sequence be loaded?')
+                    if loadseq == "yes":
+                        seqfile = askstring(' ','Please specify the filename containing'
+                                            ' the sequence.')
+                        seqname = self.soundlib.loadSequence(seqfile)
+                        if len(self.soundlib.sequence) > 0:
+                            self.sequencing = True
+                            break
+                    elif loadseq == "no":
+                        seqname = "None"
                         break
-                elif loadseq == "no":
-                    seqname = "None"
-                    break
 
             answer = askquestion(' ','Subject: ' + ID + ', Session: ' + sess +
                                  ', Repetitions: ' + str(self.repetitions) +
@@ -129,5 +136,7 @@ class Session(object):
     def setCurrentSound(self):
         if (self.sequencing):
             self.currentSound = self.soundlib.playSequence(self.iterations)
+        elif (self.inOrder):
+            self.currentSound = self.soundlib.playInOrder(self.iterations)
         else:
             self.currentSound = self.soundlib.playRandom()

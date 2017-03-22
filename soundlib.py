@@ -55,6 +55,17 @@ class SoundLibrary(object):
         '''
         return (self.play(random.randrange(self.totalSounds)))
 
+    def playInOrder(self, i):
+        '''Play the sounds in the order they show up in the folder
+
+        If the number of iterations passes the number of sounds, the sounds will
+        be played randomly.
+        '''
+        if i >= self.totalSounds:
+            return self.playRandom()
+        else:
+            return self.play(i)
+
     def playSequence(self, i):
         '''Play sounds in the order of the loaded sequence
 
