@@ -35,7 +35,7 @@ class Data():
         self.soundsPlayed.append(sound)
         self.responses.append(response)
         self.latencies.append(latency)
-        self.numRepetitions.append(round(latency / soundLength))
+        self.numRepetitions.append(int(round(latency / soundLength)))
 
 
     def recordData(self):
