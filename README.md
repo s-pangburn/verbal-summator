@@ -1,7 +1,7 @@
 verbal-summator
 ===============
 
-*Implemented in Python 2.7*
+*Implemented in Python 2.7, requires PyGame*
 
 This repository is a framework that is being used for Psychology experiments at the University of the Pacific.
 
