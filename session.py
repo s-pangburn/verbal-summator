@@ -2,7 +2,7 @@
     Session class - Manages the whole experiment and all other classes
 '''
 
-import sys
+import sys, time
 from tkSimpleDialog import askstring, askinteger
 from tkMessageBox import showwarning, askquestion
 from Tkinter import END
@@ -32,6 +32,8 @@ class Session(object):
         self.repetitions = 0
         self.sequencing = False
         self.inOrder = False
+        self.startTime = None
+        self.endTime = None
 
         self.gui = GUI(None)
         self.gui.focus_set()
@@ -90,9 +92,10 @@ class Session(object):
         self.data = Data(ID, sess) # Data collection object
 
     def startSession(self, event):
-        '''Prompts the user for input, loops a sounds and then waits for a
+        '''Prompts the user for input, loops a sound and then waits for a
             response.
         '''
+        self.startTime = time.time()
         self.gui.createEntryBox()
         self.gui.changeLabel("\n\n\n\n\n\n\n\nPlease type what word(s) you hear "
                              "and press ENTER to continue.", self.advanceSession)
@@ -103,7 +106,10 @@ class Session(object):
 
     def advanceSession(self, event):
         '''Adds response to the database, then clears the session'''
-        self.data.add(self.currentSound, self.gui.entry.get())
+        self.endTime = time.time()
+
+        self.data.add(self.currentSound, self.gui.entry.get(), self.endTime - self.startTime,
+                      self.soundlib.getCurrentSoundLength())
         self.gui.entry.delete(0, END)  # Clears the response form
 
         self.iterate()
@@ -123,6 +129,7 @@ class Session(object):
             self.gui.entry.destroy()
         else:
             self.setCurrentSound()
+            self.startTime = time.time()
 
 
     def endSession(self, event):

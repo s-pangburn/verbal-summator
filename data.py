@@ -22,9 +22,11 @@ class Data():
         self.sessionID = session
         self.soundsPlayed = []
         self.responses = []
+        self.latencies = []
+        self.numRepetitions = []
 
 
-    def add(self, sound, response):
+    def add(self, sound, response, latency, soundLength):
         '''Adds a response to the database
 
         Args:
@@ -32,6 +34,8 @@ class Data():
             response (str): the participant's response'''
         self.soundsPlayed.append(sound)
         self.responses.append(response)
+        self.latencies.append(latency)
+        self.numRepetitions.append(round(latency / soundLength))
 
 
     def recordData(self):
@@ -43,7 +47,9 @@ class Data():
         for i in range(len(self.soundsPlayed)):
             file.write("Instance #%s: \n" % str(i+1))
             file.write("  Sound played: %s \n" % self.soundsPlayed[i])
-            file.write("  Reported word(s): %s \n\n" % self.responses[i])
+            file.write("  Reported word(s): %s \n" % self.responses[i])
+            file.write("  Response latency: %s secs\n" % self.latencies[i])
+            file.write("  Number of loops: %s \n\n" % self.numRepetitions[i])
 
         file.write("-------------------------\n")
         file.close()

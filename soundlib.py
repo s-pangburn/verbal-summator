@@ -22,9 +22,10 @@ class SoundLibrary(object):
         '''Loads sounds from folder and initializes attributes'''
         self.sounds = [ f for f in os.listdir("sounds") if f.endswith(".wav") ]
         self.totalSounds = len(self.sounds)
+        self.currentSound = None
         self.sequence = []
 
-        mixer.init()
+        mixer.init(buffer=1024)
 
     def loadSequence(self, filename):
         '''Store a sequence of sounds from file into the list soundlib.sequence.
@@ -49,6 +50,10 @@ class SoundLibrary(object):
         except IOError:
             tkMessageBox.showwarning(' ', "The specified file (%s) does not "
                                     "exist." % filename)
+
+    def getCurrentSoundLength(self):
+        if self.currentSound == None: return
+        return self.currentSound.get_length()
 
     def playRandom(self):
         '''Play a random sound from the loaded sequence
@@ -100,8 +105,8 @@ class SoundLibrary(object):
         # winsound.PlaySound('Sounds\\%s' % self.sounds[number],
         #                    winsound.SND_FILENAME | winsound.SND_ASYNC |
         #                    winsound.SND_LOOP)
-        sound = mixer.Sound('Sounds\\%s' % self.sounds[number])
-        sound.play(loops=-1)
+        self.currentSound = mixer.Sound('Sounds\\%s' % self.sounds[number])
+        self.currentSound.play(loops=-1)
         return self.sounds[number]
 
     def stopAllSounds(self):
