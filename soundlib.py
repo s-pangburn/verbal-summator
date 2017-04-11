@@ -5,6 +5,7 @@ import os
 import winsound
 import random
 import tkMessageBox
+from pygame import mixer
 
 class SoundLibrary(object):
 
@@ -22,6 +23,8 @@ class SoundLibrary(object):
         self.sounds = [ f for f in os.listdir("sounds") if f.endswith(".wav") ]
         self.totalSounds = len(self.sounds)
         self.sequence = []
+
+        mixer.init()
 
     def loadSequence(self, filename):
         '''Store a sequence of sounds from file into the list soundlib.sequence.
@@ -94,11 +97,14 @@ class SoundLibrary(object):
         Args:
             number (int): The index of the sound to be played
         '''
-        winsound.PlaySound('Sounds\\%s' % self.sounds[number],
-                           winsound.SND_FILENAME | winsound.SND_ASYNC |
-                           winsound.SND_LOOP)
+        # winsound.PlaySound('Sounds\\%s' % self.sounds[number],
+        #                    winsound.SND_FILENAME | winsound.SND_ASYNC |
+        #                    winsound.SND_LOOP)
+        sound = mixer.Sound('Sounds\\%s' % self.sounds[number])
+        sound.play(loops=-1)
         return self.sounds[number]
 
     def stopAllSounds(self):
         '''Stops all sounds that are currently playing'''
-        winsound.PlaySound(None, winsound.SND_FILENAME)
+        # winsound.PlaySound(None, winsound.SND_FILENAME)
+        mixer.stop()
