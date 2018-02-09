@@ -11,9 +11,9 @@ In the end, the hope for this project is making the source easily accessible in 
 
 ## Setup
 
-After cloning the repository, navigate to the directory in your terminal and run `pip install -r requirements.txt`.
+After cloning the repository, navigate to the directory in your terminal and run `pip install -r requirements.txt`
 
-If terminal commands are not comfortable for you, feel free to install PyGame separately. **Make sure you are running Python 2.2**
+If terminal commands are not comfortable for you, [install PyGame yourself from this page](https://www.pygame.org/download.shtml). **Make sure you are running Python 2.7**
 
 ### IMPORTANT FILES
 
