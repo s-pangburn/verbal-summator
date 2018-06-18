@@ -20,12 +20,13 @@ class SoundLibrary(object):
 
     def __init__(self):
         '''Loads sounds from folder and initializes attributes'''
-        self.sounds = [ f for f in os.listdir("sounds") if f.endswith(".wav") ]
+        currentPath = os.path.dirname(os.path.realpath(__file__))
+        self.sounds = [ f for f in os.listdir(currentPath + "\sounds") if f.endswith(".wav") ]
         self.totalSounds = len(self.sounds)
         self.currentSound = None
         self.sequence = []
 
-        mixer.init(buffer=1024)
+        mixer.init(buffer=1024)  # Smaller buffer size prevents lag
 
     def loadSequence(self, filename):
         '''Store a sequence of sounds from file into the list soundlib.sequence.
