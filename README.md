@@ -15,11 +15,13 @@ After cloning the repository, navigate to the directory in your terminal and run
 
 If terminal commands are not comfortable for you, [install PyGame yourself from this page](https://www.pygame.org/download.shtml). **Make sure you are running Python 2.7**
 
+The program can be run by navigating to the parent directory of the `verbal-summator` folder and running `python verbal-summator`.
+
 ### IMPORTANT FILES
 
 Name | Description
 ----------|-----------
-SOUNDS/ | All sounds for sequencing and playback will be chosen from this folder. Just place all sound files here.
+SOUNDS/ | All sounds for sequencing and playback will be chosen from this folder. Just place all sound files here. **Only .wav and .ogg files are supported at this time.**
 INTRO.txt | Contains text for the first prompt the participant will see.
 DATA.txt | Will contain all data output from the session.
 SEQUENCE.txt | Sample file for specifying a sound sequence. **NOTE: The sequence is specified according to the absolute number of the file in the folder (The first file is "1", second is "2", etc.) This was by request.**

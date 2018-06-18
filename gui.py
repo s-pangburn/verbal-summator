@@ -3,6 +3,7 @@
 
     Makes extensive use of Tkinter library
 '''
+import os
 from Tkinter import Tk, StringVar, Label, Entry
 from time import sleep
 
@@ -68,7 +69,8 @@ class GUI(Tk):
 
     def loadIntro(self):
         '''Loads text from INTRO.txt'''
-        file = open("intro.txt")
+        currentPath = os.path.dirname(os.path.realpath(__file__))
+        file = open(currentPath + "\intro.txt")
         intro = file.readlines()
         intro += "\n\nWhen you are ready, press ENTER to continue."
         file.close()
