@@ -21,7 +21,7 @@ class SoundLibrary(object):
     def __init__(self):
         '''Loads sounds from folder and initializes attributes'''
         currentPath = os.path.dirname(os.path.realpath(__file__))
-        self.sounds = [ f for f in os.listdir(currentPath + "\sounds") if f.endswith(".wav") or f.endswith(".ogg")]
+        self.sounds = [ f for f in os.listdir(currentPath + "\..\sounds") if f.endswith(".wav") or f.endswith(".ogg")]
         self.totalSounds = len(self.sounds)
         self.currentSound = None
         self.sequence = []
@@ -107,7 +107,7 @@ class SoundLibrary(object):
         # winsound.PlaySound(currentPath + '\sounds\\%s' % self.sounds[number],
         #                    winsound.SND_FILENAME | winsound.SND_ASYNC |
         #                    winsound.SND_LOOP)
-        self.currentSound = mixer.Sound(currentPath + '\sounds\\%s' % self.sounds[number])
+        self.currentSound = mixer.Sound(currentPath + '\..\sounds\\%s' % self.sounds[number])
         self.currentSound.play(loops=-1)
         return self.sounds[number]
 

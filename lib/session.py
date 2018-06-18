@@ -36,13 +36,14 @@ class Session(object):
         self.endTime = None
 
         self.gui = GUI(None)
+
+    def start(self):
         self.gui.focus_set()
 
         self.promptSession()
         self.gui.createPrompt(self.startSession, self.endSession) # Sets up the view
 
         self.gui.mainloop()
-
 
     def promptSession(self):
         ''' Prompts the experimenter for the Subject ID, Session ID,

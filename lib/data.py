@@ -40,7 +40,7 @@ class Data():
 
     def recordData(self):
         '''Appends all collected data from the session to DATA.txt'''
-        file = open("DATA.txt", "a")
+        file = open("../DATA.txt", "a")
         file.write("\nParticipant ID: %s" % self.participantID)
         file.write("\nSession ID: %s \n\n" % self.sessionID)
 

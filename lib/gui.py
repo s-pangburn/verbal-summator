@@ -70,7 +70,7 @@ class GUI(Tk):
     def loadIntro(self):
         '''Loads text from INTRO.txt'''
         currentPath = os.path.dirname(os.path.realpath(__file__))
-        file = open(currentPath + "\intro.txt")
+        file = open(currentPath + "\..\intro.txt")
         intro = file.readlines()
         intro += "\n\nWhen you are ready, press ENTER to continue."
         file.close()
