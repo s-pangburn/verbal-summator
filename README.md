@@ -1,7 +1,7 @@
 verbal-summator
 ===============
 
-*Implemented in Python 2.7, requires PyGame*
+*Implemented in Python 2.7, requires PyGame for cross-platform sound support*
 
 This repository is a framework that is being used for Psychology experiments at the University of the Pacific.
 
@@ -9,7 +9,13 @@ The experiments surround some undeveloped theories proposed by B.F. Skinner earl
 
 In the end, the hope for this project is making the source easily accessible in order to encourage more experiments along these lines.
 
-<h3>IMPORTANT FILES</h3>
+## Setup
+
+After cloning the repository, navigate to the directory in your terminal and run `pip install -r requirements.txt`
+
+If terminal commands are not comfortable for you, [install PyGame yourself from this page](https://www.pygame.org/download.shtml). **Make sure you are running Python 2.7**
+
+### IMPORTANT FILES
 
 Name | Description
 ----------|-----------
