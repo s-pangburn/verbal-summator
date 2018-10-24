@@ -50,7 +50,7 @@ class GUI(Tk):
         self.label.grid(column=0, row=0, padx=20, pady=20)
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
-        self.changeLabel(self.loadIntro(), startFunction)
+        self.setLabel(self.loadIntro(), startFunction)
         self.bind("<Escape>", endFunction)
 
 
@@ -78,7 +78,7 @@ class GUI(Tk):
         return ''.join(intro)
 
 
-    def changeLabel(self, message, newFunction):
+    def setLabel(self, message, newFunction):
         '''Changes the text that is displayed on screen
 
         Args:

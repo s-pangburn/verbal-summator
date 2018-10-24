@@ -31,6 +31,7 @@ class Session(object):
         self.currentSound = ""
         self.repetitions = 0
         self.sequencing = False
+        self.sequenceName = "None"
         self.inOrder = False
         self.startTime = None
         self.endTime = None
@@ -50,14 +51,26 @@ class Session(object):
             and the number of repetitions
         '''
         while (True):
-            ID = askstring(' ','Please enter Subject ID:')
-            if ID == None:
+            participantId = askstring(' ','Please enter Subject ID:')
+            if participantId == None:
                 sys.exit()
-            sess = askstring(' ','Please enter Session ID:')
-            if sess == None:
+            sessionId = askstring(' ','Please enter Session ID:')
+            if sessionId == None:
                 sys.exit()
 
-            while self.repetitions < 1:
+            self.setRepetitions()
+            self.specifySequence()
+
+            answer = askquestion(' ','Subject: ' + ID + ', Session: ' + sess +
+                                 ', Repetitions: ' + str(self.repetitions) +
+                                 ', Sequence: ' + self.sequenceName + '\nIs this correct?')
+            if answer == "yes":
+                break
+
+        self.data = Data(participantId, sessionId) # Data collection object
+    
+    def setRepetitions(self):
+        while self.repetitions < 1:
                 self.repetitions = askinteger(' ','Please enter the number of '
                                               'repetitions:')
                 if self.repetitions == None:
@@ -65,8 +78,9 @@ class Session(object):
                 elif self.repetitions < 1:
                     showwarning(' ','Integer must have a non-negative '
                                 'non-zero value.')
-
-            inorder = askquestion(' ', 'Should the sounds be played in order?')
+    
+    def specifySequence(self):
+        inorder = askquestion(' ', 'Should the sounds be played in order?')
             if inorder == "yes":
                 self.inOrder = True
                 seqname = "In Order"
@@ -74,23 +88,16 @@ class Session(object):
                 while (True):
                     loadseq = askquestion(' ', 'Then should a sequence be loaded?')
                     if loadseq == "yes":
-                        seqfile = askstring(' ','Please specify the filename containing'
-                                            ' the sequence.')
-                        seqname = self.soundlib.loadSequence(seqfile)
+                        self.sequenceName = askstring(' ','Please specify the filename'
+                                            ' containing the sequence.')
+                        seqname = self.soundlib.loadSequence(self.sequenceName)
                         if len(self.soundlib.sequence) > 0:
                             self.sequencing = True
                             break
                     elif loadseq == "no":
                         seqname = "None"
                         break
-
-            answer = askquestion(' ','Subject: ' + ID + ', Session: ' + sess +
-                                 ', Repetitions: ' + str(self.repetitions) +
-                                 ', Sequence: ' + seqname + '\nIs this correct?')
-            if answer == "yes":
-                break
-
-        self.data = Data(ID, sess) # Data collection object
+        return seqname
 
     def startSession(self, event):
         '''Prompts the user for input, loops a sound and then waits for a
@@ -98,7 +105,7 @@ class Session(object):
         '''
         self.startTime = time.time()
         self.gui.createEntryBox()
-        self.gui.changeLabel("\n\n\n\n\n\n\n\nPlease type what word(s) you hear "
+        self.gui.setLabel("\n\n\n\n\n\n\n\nPlease type what word(s) you hear "
                              "and press ENTER to continue.", self.advanceSession)
         self.gui.greyScreen()
 
@@ -124,7 +131,7 @@ class Session(object):
         self.gui.greyScreen()
         self.iterations += 1
         if self.iterations == self.repetitions:
-            self.gui.changeLabel("\n\n\n\n\n\n\n\nThank you for participating!"
+            self.gui.setLabel("\n\n\n\n\n\n\n\nThank you for participating!"
                                  "\nPlease inform the researcher that you are"
                                  " finished.", self.endSession)
             self.gui.entry.destroy()

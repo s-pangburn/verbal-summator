@@ -1,5 +1,5 @@
 '''
-    Data object - handles data collection and writing to file
+    Data object - handles data collection and writing results to file
 '''
 
 class Data():
