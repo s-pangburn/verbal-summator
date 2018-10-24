@@ -14,8 +14,6 @@ def main():
 
     session = Session()
     session.start()
-    
-    print("Ran the application.")
 
 if __name__ == "__main__":
     main()

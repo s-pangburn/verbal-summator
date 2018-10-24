@@ -24,7 +24,7 @@ Name | Description
 ----------|-----------
 SOUNDS/ | All sounds for sequencing and playback will be chosen from this folder. Just place all sound files here. **Only .wav and .ogg files are supported at this time.**
 INTRO.txt | Contains text for the first prompt the participant will see.
-DATA.txt | Will contain all data output from the session.
+DATA.csv | Will contain all data output from the session in spreadsheet format. Easily imported into Google Sheets or Excel.
 SEQUENCE.txt | Sample file for specifying a sound sequence. **NOTE: The sequence is specified according to the absolute number of the file in the folder (The first file is "1", second is "2", etc.) This was by request.**
 
 <br>Any questions can be mailed to Stephen Pangburn at stephen.pangburn.ii@gmail.com

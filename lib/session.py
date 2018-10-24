@@ -61,7 +61,7 @@ class Session(object):
             self.setRepetitions()
             self.specifySequence()
 
-            answer = askquestion(' ','Subject: ' + ID + ', Session: ' + sess +
+            answer = askquestion(' ','Subject: ' + participantId + ', Session: ' + sessionId +
                                  ', Repetitions: ' + str(self.repetitions) +
                                  ', Sequence: ' + self.sequenceName + '\nIs this correct?')
             if answer == "yes":
@@ -71,32 +71,32 @@ class Session(object):
     
     def setRepetitions(self):
         while self.repetitions < 1:
-                self.repetitions = askinteger(' ','Please enter the number of '
-                                              'repetitions:')
-                if self.repetitions == None:
-                    sys.exit()
-                elif self.repetitions < 1:
-                    showwarning(' ','Integer must have a non-negative '
-                                'non-zero value.')
+            self.repetitions = askinteger(' ','Please enter the number of '
+                                            'repetitions:')
+            if self.repetitions == None:
+                sys.exit()
+            elif self.repetitions < 1:
+                showwarning(' ','Integer must have a non-negative '
+                            'non-zero value.')
     
     def specifySequence(self):
         inorder = askquestion(' ', 'Should the sounds be played in order?')
-            if inorder == "yes":
-                self.inOrder = True
-                seqname = "In Order"
-            else:
-                while (True):
-                    loadseq = askquestion(' ', 'Then should a sequence be loaded?')
-                    if loadseq == "yes":
-                        self.sequenceName = askstring(' ','Please specify the filename'
-                                            ' containing the sequence.')
-                        seqname = self.soundlib.loadSequence(self.sequenceName)
-                        if len(self.soundlib.sequence) > 0:
-                            self.sequencing = True
-                            break
-                    elif loadseq == "no":
-                        seqname = "None"
+        if inorder == "yes":
+            self.inOrder = True
+            seqname = "In Order"
+        else:
+            while (True):
+                loadseq = askquestion(' ', 'Then should a sequence be loaded?')
+                if loadseq == "yes":
+                    self.sequenceName = askstring(' ','Please specify the filename'
+                                        ' containing the sequence.')
+                    seqname = self.soundlib.loadSequence(self.sequenceName)
+                    if len(self.soundlib.sequence) > 0:
+                        self.sequencing = True
                         break
+                elif loadseq == "no":
+                    seqname = "None"
+                    break
         return seqname
 
     def startSession(self, event):

@@ -1,6 +1,7 @@
 build/
 __pycache__/
 Data.txt
+Data.csv
 SEQUENCE.txt
 setup.py
 *.pyc
