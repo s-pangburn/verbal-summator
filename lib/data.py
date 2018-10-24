@@ -52,7 +52,7 @@ class Data():
                 'Iteration',
                 'Sound File', 
                 'Reported Words', 
-                'Latency', 
+                'Latency (secs)', 
                 'Number of Loops'
                 ]
             writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
@@ -66,6 +66,6 @@ class Data():
                     'Iteration': i + 1,
                     'Sound File': self.soundsPlayed[i], 
                     'Reported Words': self.responses[i], 
-                    'Latency': self.latencies[i], 
+                    'Latency (secs)': self.latencies[i], 
                     'Number of Loops': self.numRepetitions[i]
                     })

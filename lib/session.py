@@ -80,7 +80,7 @@ class Session(object):
                             'non-zero value.')
     
     def specifySequence(self):
-        inorder = askquestion(' ', 'Should the sounds be played in order?')
+        inorder = askquestion(' ', 'Should the sounds be played in-order?')
         if inorder == "yes":
             self.inOrder = True
             seqname = "In Order"
