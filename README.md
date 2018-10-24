@@ -12,11 +12,11 @@ In the end, the hope for this project is making the source easily accessible in 
 
 ## Setup
 
+**Make sure you are running Python 2.7**
+
 After cloning the repository, navigate to the directory in your terminal and run `pip install -r requirements.txt`
 
-If terminal commands are not comfortable for you, [install PyGame yourself from this page](https://www.pygame.org/download.shtml). **Make sure you are running Python 2.7**
-
-The program can be run by navigating to the parent directory of the `verbal-summator` folder and running `python verbal-summator`.
+Once that's finished, navigate to the parent directory of the `verbal-summator` folder and run `python verbal-summator`.
 
 ### IMPORTANT FILES
 
