@@ -44,13 +44,15 @@ class Session(object):
     def loadConfig(self):
         '''Loads CONFIG.yaml and prepares the parameters for the session'''
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(dir_path + "/../CONFIG.yaml", 'r') as config:
+        with open(dir_path + "/../CONFIG.yml", 'r') as config:
             options = yaml.load(config)
         return options
 
 
     def start(self):
         self.gui.focus_set()
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        self.gui.iconbitmap(default=dir_path + "/blank.ico")
 
         self.promptSession()
         self.gui.createPrompt(self.startSession, self.endSession) # Sets up the view

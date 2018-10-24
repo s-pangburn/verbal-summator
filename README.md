@@ -23,7 +23,7 @@ Once that's finished, navigate to the parent directory of the `verbal-summator` 
 Name | Description
 ----------|-----------
 SOUNDS/ | All sounds for sequencing and playback will be chosen from this folder. Just place all sound files here. **Only .wav and .ogg files are supported at this time.**
-CONFIG.yaml | Allows you to tweak the constraints of the experiment (number of reps, order of sounds, etc.) If options are not provided here, the program will prompt you for them.
+CONFIG.yml | Allows you to tweak the constraints of the experiment (number of reps, order of sounds, etc.) If options are not provided here, the program will prompt you for them.
 INTRO.txt | Contains text for the first prompt the participant will see.
 DATA.csv | Will contain all data output from the session exported in spreadsheet (CSV) format. Compatible with both Google Sheets and Microsoft Excel.
 SEQUENCE.txt | Sample file for specifying a sound sequence. **NOTE: The sequence is specified according to the absolute number of the file in the folder (The first file is "1", second is "2", etc.) This was by request.**
