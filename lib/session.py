@@ -23,7 +23,7 @@ class Session(object):
         iterations: Tracks the number of trials the participant has completed
         currentSound: filename of the sound that is currently playing
         repetitions: The number of trials the participant must complete
-        sequenceType: Specifies 
+        sequenceType: Specifies sequence type (IN-ORDER, LOADED, or RANDOM)
     '''
 
     def __init__(self):
