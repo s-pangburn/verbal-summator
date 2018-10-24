@@ -1,6 +1,6 @@
 verbal-summator
 ===============
-[![version](https://img.shields.io/github/release/s-pangburn/verbal-summator.svg)
+![version](https://img.shields.io/github/release/s-pangburn/verbal-summator.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 *Implemented in Python 2.7, requires PyGame for cross-platform sound support*
