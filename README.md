@@ -1,9 +1,8 @@
 verbal-summator
 ===============
-![version](https://img.shields.io/github/release/s-pangburn/verbal-summator.svg)
+![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)]
+![version](https://img.shields.io/github/release/s-pangburn/verbal-summator.svg?colorB=brightgreen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-*Implemented in Python 2.7, requires PyGame for cross-platform sound support*
 
 This repository is a framework that is being used for Psychology experiments at the University of the Pacific.
 
