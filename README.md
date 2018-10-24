@@ -1,6 +1,6 @@
 verbal-summator
 ===============
-![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)]
+![Python 2.7](https://img.shields.io/badge/python-2.7-blue.svg)
 ![version](https://img.shields.io/github/release/s-pangburn/verbal-summator.svg?colorB=brightgreen)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
