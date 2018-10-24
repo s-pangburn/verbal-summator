@@ -2,13 +2,15 @@
     Session class - Manages the whole experiment and all other classes
 '''
 
-import sys, time
+import sys, time, os, yaml
 from tkSimpleDialog import askstring, askinteger
 from tkMessageBox import showwarning, askquestion
 from Tkinter import END
 from gui import GUI
 from data import Data
 from soundlib import SoundLibrary
+
+import pdb
 
 class Session(object):
     '''Initializes the session and calls helper classes
@@ -21,22 +23,31 @@ class Session(object):
         iterations: Tracks the number of trials the participant has completed
         currentSound: filename of the sound that is currently playing
         repetitions: The number of trials the participant must complete
-        sequencing: True if a sequence has been requested by the researcher
+        sequenceType: Specifies 
     '''
 
     def __init__(self):
         '''Initializes classes and begins main loop'''
+        options = self.loadConfig()
+
         self.soundlib = SoundLibrary()
         self.iterations = 0
         self.currentSound = ""
-        self.repetitions = 0
-        self.sequencing = False
-        self.sequenceName = "None"
-        self.inOrder = False
+        self.repetitions = options['numRepetitions']
+        self.sequenceType = options['sequenceType'].upper()
+        self.sequenceName = options['sequenceName']
         self.startTime = None
         self.endTime = None
 
         self.gui = GUI(None)
+
+    def loadConfig(self):
+        '''Loads CONFIG.yaml and prepares the parameters for the session'''
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        with open(dir_path + "/../CONFIG.yaml", 'r') as config:
+            options = yaml.load(config)
+        return options
+
 
     def start(self):
         self.gui.focus_set()
@@ -50,29 +61,32 @@ class Session(object):
         ''' Prompts the experimenter for the Subject ID, Session ID,
             and the number of repetitions
         '''
+
         while (True):
+            self.setRepetitions()
+            self.specifySequence()
+
             participantId = askstring(' ','Please enter Subject ID:')
             if participantId == None:
                 sys.exit()
             sessionId = askstring(' ','Please enter Session ID:')
             if sessionId == None:
                 sys.exit()
-
-            self.setRepetitions()
-            self.specifySequence()
+            
+            sequence = self.sequenceName if self.sequenceType == 'LOADED' else self.sequenceType
 
             answer = askquestion(' ','Subject: ' + participantId + ', Session: ' + sessionId +
                                  ', Repetitions: ' + str(self.repetitions) +
-                                 ', Sequence: ' + self.sequenceName + '\nIs this correct?')
+                                 ', Sequence: ' + sequence + '\nIs this correct?')
             if answer == "yes":
                 break
 
         self.data = Data(participantId, sessionId) # Data collection object
     
     def setRepetitions(self):
-        while self.repetitions < 1:
-            self.repetitions = askinteger(' ','Please enter the number of '
-                                            'repetitions:')
+        while self.repetitions == None or self.repetitions < 1:
+            self.repetitions = askinteger(' ','Invalid repetitions specified in CONFIG.yaml.'
+                                            ' Please enter the number of repetitions:')
             if self.repetitions == None:
                 sys.exit()
             elif self.repetitions < 1:
@@ -80,24 +94,25 @@ class Session(object):
                             'non-zero value.')
     
     def specifySequence(self):
-        inorder = askquestion(' ', 'Should the sounds be played in-order?')
-        if inorder == "yes":
-            self.inOrder = True
-            seqname = "In Order"
-        else:
-            while (True):
-                loadseq = askquestion(' ', 'Then should a sequence be loaded?')
-                if loadseq == "yes":
-                    self.sequenceName = askstring(' ','Please specify the filename'
-                                        ' containing the sequence.')
-                    seqname = self.soundlib.loadSequence(self.sequenceName)
-                    if len(self.soundlib.sequence) > 0:
-                        self.sequencing = True
+        if self.sequenceType == None or self.sequenceType == "LOADED" and self.sequenceName == None:
+            self.sequenceName = "None"
+            inorder = askquestion(' ', 'No sequence specified in CONFIG.yaml.'
+                                    ' Should the sounds be played in-order?')
+            if inorder == "yes":
+                self.sequenceType = "IN-ORDER"
+            else:
+                while (True):
+                    loadseq = askquestion(' ', 'Then should a sequence be loaded?')
+                    if loadseq == "yes":
+                        self.sequenceName = askstring(' ','Please specify the filename'
+                                            ' containing the sequence.')
+                        seqname = self.soundlib.loadSequence(self.sequenceName)
+                        if len(self.soundlib.sequence) > 0:
+                            self.sequenceType = "LOADED"
+                            break
+                    elif loadseq == "no":
+                        self.sequenceType = "RANDOM"
                         break
-                elif loadseq == "no":
-                    seqname = "None"
-                    break
-        return seqname
 
     def startSession(self, event):
         '''Prompts the user for input, loops a sound and then waits for a
@@ -149,9 +164,10 @@ class Session(object):
             sys.exit()
 
     def setCurrentSound(self):
-        if (self.sequencing):
+        if (self.sequenceType == "LOADED"):
             self.currentSound = self.soundlib.playSequence(self.iterations)
-        elif (self.inOrder):
+        elif (self.sequenceType == "IN-ORDER" or self.sequenceType == "IN ORDER"):
             self.currentSound = self.soundlib.playInOrder(self.iterations)
         else:
+            # Treat the sequenceType as random
             self.currentSound = self.soundlib.playRandom()

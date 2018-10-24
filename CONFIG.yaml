@@ -1,0 +1,6 @@
+# This file will allow you to set consistent parameters for the experiment.
+
+numRepetitions: 5  # Must be a non-negative, non-zero value
+sequenceType: In-Order # Possible Values: "Loaded", "In-Order", "Random"
+sequenceName:   # Filename of the sequence (if any, leave blank if none desired)
+  

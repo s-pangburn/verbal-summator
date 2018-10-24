@@ -39,7 +39,8 @@ class SoundLibrary(object):
         if not filename.endswith(".txt"):
             filename = filename + ".txt"
         try:
-            f = open(filename)
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            f = open(dir_path + "/../" + filename)
             self.sequence = f.readlines()
             self.sequence = [(int(i) - 1) for i in self.sequence]  # Convert the data to integer values
             if len(self.sequence) == 0:
