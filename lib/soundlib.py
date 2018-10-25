@@ -2,7 +2,6 @@
     Sound Library class - imports sounds and stores them for later use
 '''
 import os
-import winsound
 import random
 import tkMessageBox
 from pygame import mixer
