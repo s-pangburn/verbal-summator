@@ -77,7 +77,8 @@ class Session(object):
 
             answer = askquestion(' ','Subject: ' + participantId + ', Session: ' + sessionId +
                                  ', Repetitions: ' + str(self.repetitions) +
-                                 ', Sequence: ' + sequence + '\nIs this correct?')
+                                 ', Sequence: ' + sequence + '\n\nIs this correct? ' +
+                                 '\n\n(reference CONFIG.yml file for options)')
             if answer == "yes":
                 break
 
