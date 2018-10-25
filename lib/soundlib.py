@@ -105,14 +105,10 @@ class SoundLibrary(object):
             number (int): The index of the sound to be played
         '''
         currentPath = os.path.dirname(os.path.realpath(__file__))
-        # winsound.PlaySound(currentPath + '\sounds\\%s' % self.sounds[number],
-        #                    winsound.SND_FILENAME | winsound.SND_ASYNC |
-        #                    winsound.SND_LOOP)
         self.currentSound = mixer.Sound(currentPath + '\..\sounds\\%s' % self.sounds[number])
         self.currentSound.play(loops=-1)
         return self.sounds[number]
 
     def stopAllSounds(self):
         '''Stops all sounds that are currently playing'''
-        # winsound.PlaySound(None, winsound.SND_FILENAME)
         mixer.stop()

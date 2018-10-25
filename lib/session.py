@@ -10,8 +10,6 @@ from gui import GUI
 from data import Data
 from soundlib import SoundLibrary
 
-import pdb
-
 class Session(object):
     '''Initializes the session and calls helper classes
 
@@ -42,7 +40,7 @@ class Session(object):
         self.gui = GUI(None)
 
     def loadConfig(self):
-        '''Loads CONFIG.yaml and prepares the parameters for the session'''
+        '''Loads CONFIG.yml and prepares the parameters for the session'''
         dir_path = os.path.dirname(os.path.realpath(__file__))
         with open(dir_path + "/../CONFIG.yml", 'r') as config:
             options = yaml.load(config)
@@ -86,8 +84,9 @@ class Session(object):
         self.data = Data(participantId, sessionId) # Data collection object
     
     def setRepetitions(self):
+        '''Prompts the user for a specific number of repetitions if none was specified'''
         while self.repetitions == None or self.repetitions < 1:
-            self.repetitions = askinteger(' ','Invalid repetitions specified in CONFIG.yaml.'
+            self.repetitions = askinteger(' ','Invalid repetitions specified in CONFIG.yml.'
                                             ' Please enter the number of repetitions:')
             if self.repetitions == None:
                 sys.exit()
@@ -96,9 +95,10 @@ class Session(object):
                             'non-zero value.')
     
     def specifySequence(self):
+        '''Prompts the user for a sequence type if none was specified'''
         if self.sequenceType == None or self.sequenceType == "LOADED" and self.sequenceName == None:
             self.sequenceName = "None"
-            inorder = askquestion(' ', 'No sequence specified in CONFIG.yaml.'
+            inorder = askquestion(' ', 'No sequence specified in CONFIG.yml.'
                                     ' Should the sounds be played in-order?')
             if inorder == "yes":
                 self.sequenceType = "IN-ORDER"
@@ -166,6 +166,7 @@ class Session(object):
             sys.exit()
 
     def setCurrentSound(self):
+        '''Sets the next sound based on the sequence type'''
         if (self.sequenceType == "LOADED"):
             self.currentSound = self.soundlib.playSequence(self.iterations)
         elif (self.sequenceType == "IN-ORDER" or self.sequenceType == "IN ORDER"):
