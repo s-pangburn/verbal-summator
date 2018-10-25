@@ -6,9 +6,9 @@ verbal-summator
 
 This repository is a framework that is being used for Psychology experiments at the University of the Pacific.
 
-The experiments surround some undeveloped theories proposed by psychologist B.F. Skinner early on in his career regarding [verbal summation](http://psycnet.apa.org/record/1936-04586-001). The primary interest stemmed from constructing a means of measuring verbal behavioral patterns by creating a **"verbal ink blot"** test that could be used to measure environmental influences on participant speech patterns. However, the original experiment was conducted using recordings painstakingly timed on a phonograph, quite outdated technology by modern standards.
+The experiments surround some undeveloped theories proposed by psychologist B.F. Skinner early on in his career regarding [verbal summation](http://psycnet.apa.org/record/1936-04586-001) and the measurement of verbal behavior. However, the original experiment was conducted using recordings painstakingly timed on a phonograph, quite outdated technology by modern standards.
 
-In the end, the hope for this project is to modernize Skinner's original tool, making the source easily accessible so that more experiments along these lines can be conducted and adjusted with relative ease.
+The hope for this project is to modernize Skinner's original methodology, making the source easily accessible so that more experiments along these lines can be conducted and adjusted with relative ease.
 
 ## Setup
 
